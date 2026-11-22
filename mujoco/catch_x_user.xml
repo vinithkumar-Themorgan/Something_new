@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="CATCH-X">
+  <compiler angle="radian" meshdir="C:/Users/vinith/Downloads/CATCH-X_Corrected_Marker_and_Camera/meshes" />
+  <visual>
+    <global offwidth="1920" offheight="1080"/>
+  </visual>
+  <option timestep="0.002" gravity="0 0 -9.81" />
+  <asset>
+    <mesh name="smooth_rod" file="smooth_rod.stl" scale="0.001 0.001 0.001" />
+    <mesh name="rod_support" file="rod_support.stl" scale="0.001 0.001 0.001" />
+    <mesh name="linear_bearing" file="linear_bearing.stl" scale="0.001 0.001 0.001" />
+    <mesh name="catcher" file="catcher.stl" scale="0.001 0.001 0.001" />
+    <mesh name="catcher_holder" file="catcher_holder.stl" scale="0.001 0.001 0.001" />
+    <mesh name="base" file="base.stl" scale="0.001 0.001 0.001" />
+
+    <mesh name="catcher_marker_white" file="catcher_marker_white.stl" scale="0.001 0.001 0.001" inertia="shell" />
+    <mesh name="base_marker_white" file="base_marker_white.stl" scale="0.001 0.001 0.001" inertia="shell" />
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+    <material name="grid_mat" texture="grid" texrepeat="4 4" reflectance="0.2"/>
+    <texture name="day_sky" type="skybox" builtin="flat" rgb1="0.80 0.80 0.80" width="1086" height="1086"/>
+
+  </asset>
+  <worldbody>
+    <light name="sun" pos="0 0 3" dir="0 0 -1" directional="true" diffuse="1 1 1" ambient="0.5 0.5 0.5" specular="0.2 0.2 0.2"/>
+    <geom name="ground" type="plane" pos="0 0 -0.04" size="2 2 0.1" material="grid_mat"/>
+    <!-- Desk tabletop -->
+    <geom name="desk_top"
+          type="box"
+          pos="0 0 0.73"
+          size="0.75 0.40 0.025"
+          rgba="0.65 0.45 0.28 1"
+          contype="0"
+          conaffinity="0"/>
+
+    <!-- Desk legs -->
+    <geom name="leg_1" type="box"
+          pos="-0.65 -0.30 0.35"
+          size="0.025 0.025 0.35"
+          rgba="0.18 0.18 0.20 1"/>
+
+    <geom name="leg_2" type="box"
+          pos="0.65 -0.30 0.35"
+          size="0.025 0.025 0.35"
+          rgba="0.18 0.18 0.20 1"/>
+
+    <geom name="leg_3" type="box"
+          pos="-0.65 0.30 0.35"
+          size="0.025 0.025 0.35"
+          rgba="0.18 0.18 0.20 1"/>
+
+    <geom name="leg_4" type="box"
+          pos="0.65 0.30 0.35"
+          size="0.025 0.025 0.35"
+          rgba="0.18 0.18 0.20 1"/>
+    <body name="fixed_assembly" pos="0 0 0.755">
+      <geom name="smooth_rod_1" type="mesh" mesh="smooth_rod" pos="-0.273 -0.0742 0.0319" quat="0.7071067812 0.7071067812 0 0" contype="0" conaffinity="0" rgba="0.99216 0.99216 0.99216 1" />
+      <geom name="rod_support_1" type="mesh" mesh="rod_support" pos="-0.265 0.0742 0.0319" quat="-0.5 -0.5 0.5 0.5" contype="0" conaffinity="0" rgba="0.89412 0.91373 0.92941 1" />
+      <geom name="rod_support_2" type="mesh" mesh="rod_support" pos="0.265 0.0742 0.0319" quat="-0.5 -0.5 0.5 0.5" contype="0" conaffinity="0" rgba="0.89412 0.91373 0.92941 1" />
+      <geom name="smooth_rod_2" type="mesh" mesh="smooth_rod" pos="-0.273 0.0742 0.0319" quat="1 0 0 0" contype="0" conaffinity="0" rgba="0.99216 0.99216 0.99216 1" />
+      <geom name="rod_support_3" type="mesh" mesh="rod_support" pos="-0.265 -0.0742 0.0319" quat="0.5 0.5 -0.5 -0.5" contype="0" conaffinity="0" rgba="0.89412 0.91373 0.92941 1" />
+      <geom name="base_1" type="mesh" mesh="base" pos="0 0 0" quat="1 0 0 0" contype="0" conaffinity="0" rgba="0.38039 0.37647 0.37647 1" />
+      <geom name="rod_support_4" type="mesh" mesh="rod_support" pos="0.265 -0.0742 0.0319" quat="-0.5 -0.5 0.5 0.5" contype="0" conaffinity="0" rgba="0.89412 0.91373 0.92941 1" />
+      <geom name="base_marker_visual" type="mesh" mesh="base_marker_white" rgba="1 1 1 1" contype="0" conaffinity="0" mass="0" />
+    </body>
+    <body name="moving_carriage" pos="0 0 0.755">
+      <joint name="carriage_slide" type="slide" axis="1 0 0" range="0 0.432" limited="true" damping="0.5" />
+      <inertial pos="0 0 0.08" mass="1.0" diaginertia="0.015 0.015 0.015" />
+      <geom name="linear_bearing_1" type="mesh" mesh="linear_bearing" pos="-0.219 -0.0742 0.0319" quat="-0.5 0.5 -0.5 0.5" contype="0" conaffinity="0" rgba="0.90196 0.90196 0.90196 1" />
+      <geom name="catcher_1" type="mesh" mesh="catcher" pos="-0.219 -0.000449714 0.0889" quat="-0.7071067812 0 0 0.7071067812" contype="0" conaffinity="0" rgba="0.26275 0.28235 0.30196 1" />
+      <geom name="catcher_holder_1" type="mesh" mesh="catcher_holder" pos="-0.225382599 -0.000449714 0.0509" quat="0.7071067812 0 0 -0.7071067812" contype="0" conaffinity="0" rgba="0.93333 0.93333 0.93333 1" />
+      <geom name="linear_bearing_2" type="mesh" mesh="linear_bearing" pos="-0.219 0.0742 0.0319" quat="-0.5 0.5 -0.5 0.5" contype="0" conaffinity="0" rgba="0.90196 0.90196 0.90196 1" />
+      <geom name="catcher_marker_visual" type="mesh" mesh="catcher_marker_white" rgba="1 1 1 1" contype="0" conaffinity="0" mass="0" pos="-0.219 -0.000449714 0.0889" quat="-0.7071067812 0 0 0.7071067812" />
+    </body>
+    <body name="virtual_ball" pos="-0.18 0 0.55">
+      <freejoint name="ball_free" />
+      <geom name="ball_geom" type="sphere" size="0.02" mass="0.003" rgba="1 0.35 0.12 1" contype="0" conaffinity="0" />
+    </body>
+  </worldbody>
+  <statistic center="0 0 0.1" extent="0.9" />
+</mujoco>
